@@ -7,6 +7,7 @@ const resolvers = require('./resolvers')
 const { startStandaloneServer } = require('@apollo/server/standalone');
 const axios = require('axios');
 const { AuthenticationError } = require('./utils/error');
+const ListingsAPI = require('./datasources/listings')
 
 async function startApolloServer() {
 
@@ -29,6 +30,7 @@ async function startApolloServer() {
             userId: userInfo.userId,
             userRole: userInfo.userRole,
             dataSources: {
+                listingsAPI: new ListingsAPI()
             }
         }
     }

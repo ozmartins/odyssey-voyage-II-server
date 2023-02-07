@@ -1,10 +1,24 @@
 extend schema @link(url: "https://specs.apollo.dev/federation/v2.0", import: ["@key"])
 
 type Query {
-    #featuredListings: [Listing!]!
+    featuredListings: [Listing!]!
     example: String
 }
 
 type Listing {
-    id: ID!
+    id: ID!,
+    title: String!,
+    description: String!,
+    photoThumbnail: String!,
+    numOfBeds: Int!,
+    costPerNight: Float!,
+    locationType: LocationType
+}
+
+enum LocationType {
+    SPACESHIP,
+    HOUSE,
+    CAMPSITE,
+    APARTMENT,
+    ROOM
 }
