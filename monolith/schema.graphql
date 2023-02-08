@@ -1,8 +1,7 @@
 extend schema @link(url: "https://specs.apollo.dev/federation/v2.0", import: ["@key"])
 
 type Query {
-    featuredListings: [Listing!]!
-    example: String
+    featuredListings: [Listing!]!    
 }
 
 type Listing {
@@ -12,7 +11,16 @@ type Listing {
     photoThumbnail: String!,
     numOfBeds: Int!,
     costPerNight: Float!,
-    locationType: LocationType
+    locationType: LocationType,
+    host: Host!
+}
+
+interface User {
+    id: ID!
+}
+
+type Host implements User @key(fields: "id") {
+    id: ID!    
 }
 
 enum LocationType {
