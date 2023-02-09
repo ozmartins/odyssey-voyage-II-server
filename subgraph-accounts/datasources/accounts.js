@@ -1,5 +1,5 @@
 const { RESTDataSource } = require('@apollo/datasource-rest');
-const { user } = require('../resolver');
+const { user } = require('../resolvers');
 
 class AccountsAPI extends RESTDataSource {
     constructor() {
