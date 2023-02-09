@@ -1,10 +1,9 @@
-const { ApolloServer } = require('@apollo/server');
-const { startStandAloneServer } = require('@apollo/server/standalone');
-const { buildSubgraphSchema } = require('@apollo/subgraph');
 const AccountsAPI = require('./datasources/accounts');
-const gql = require('graphql-tag');
+const { ApolloServer } = require('@apollo/server');
+const { startStandaloneServer } = require('@apollo/server/standalone');
+const { buildSubgraphSchema } = require('@apollo/subgraph');
 const { readFileSync } = require('fs');
-
+const gql = require('graphql-tag');
 const typeDefs = gql(readFileSync('./schema.graphql', { encoding: 'utf-8' }));
 const resolvers = require('./resolvers');
 
@@ -33,15 +32,15 @@ const context = async ({ req }) => {
     }
 };
 
+const port = 4002;
+
+const options = {
+    context,
+    listen: port
+};
+
 const startApolloServer = async () => {
-    const port = 4002;
-
-    const options = {
-        context,
-        listen: port
-    };
-
-    const { url } = await startStandAloneServer(server, options);
+    const { url } = await startStandaloneServer(server, options);
 
     console.log(`accounts subgraph running at ${url}`);
 }
