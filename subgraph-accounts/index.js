@@ -15,14 +15,16 @@ const server = new ApolloServer({
 });
 
 const extractUserIdFromHeader = (req) => {
-    const token = req.headers.authorization || '';
-    return token.split(' ')[1]; //token example = "Bearer User-1"
+    const token = req.headers.authorization;
+    return token.split(' ')[1]; //token example = "Bearer User-1"    
 }
 
 const context = async ({ req }) => {
     const userId = extractUserIdFromHeader(req);
     const accountsAPI = new AccountsAPI();
-    const { data } = accountsAPI.login(userId);
+    const data = await accountsAPI.login(userId);
+    console.log(data.id);
+    console.log(data.role);
     return {
         userId: data.id,
         userRole: data.role,
@@ -40,9 +42,13 @@ const options = {
 };
 
 const startApolloServer = async () => {
-    const { url } = await startStandaloneServer(server, options);
+    try {
+        const { url } = await startStandaloneServer(server, options);
 
-    console.log(`accounts subgraph running at ${url}`);
+        console.log(`accounts subgraph running at ${url}`);
+    } catch (e) {
+        console.log(e);
+    }
 }
 
 startApolloServer();

@@ -4,7 +4,7 @@ const { user } = require('../resolvers');
 class AccountsAPI extends RESTDataSource {
     constructor() {
         super();
-        this.baseURL = 'http://localhost:4011';
+        this.baseURL = 'http://localhost:4011/';
     }
 
     login(username) {
