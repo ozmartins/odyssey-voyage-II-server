@@ -17,7 +17,27 @@ const resolvers = {
             return user;
         },
     },
-    Mutation: {},
+    Mutation: {
+        updateProfile: async (_, { updateProfileInput }, { dataSources, userId }) => {
+            if (!userId) throw AuthenticationError();
+            try {
+                const updatedUser = dataSources.accountsAPI.updateUser({ userId, userInfo: updateProfileInput });
+                return {
+                    code: 200,
+                    success: true,
+                    message: "Profile succesfuly updated",
+                    user: updatedUser
+                }
+            } catch (e) {
+                return {
+                    code: 400,
+                    success: false,
+                    message: e
+                }
+            }
+            return null;
+        }
+    },
     User: {
         __resolveType(user) {
             return user.role;

@@ -1,8 +1,25 @@
 extend schema @link(url: "https://specs.apollo.dev/federation/v2.0", import: ["@key"])
 
 type Query {
-    user(id: ID!): User,
+    user(id: ID!): User
     me: User
+}
+
+type Mutation {
+    updateProfile(updateProfileInput: UpdateProfileInput): UpdateProfileResponse!
+}
+
+input UpdateProfileInput {
+    name: String
+    profileDescription: String
+    profilePicture: String
+}
+
+type UpdateProfileResponse {
+    code: Int!
+    success: Boolean!
+    message: String!
+    user: User
 }
 
 interface User {
