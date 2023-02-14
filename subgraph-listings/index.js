@@ -40,7 +40,7 @@ async function startApolloServer() {
         listen: { port: 4001 }
     });
 
-    console.log("server running on --> ", url);
+    console.log("subgraph listings running on --> ", url);
 }
 
 startApolloServer();

@@ -23,8 +23,6 @@ const context = async ({ req }) => {
     const userId = extractUserIdFromHeader(req);
     const accountsAPI = new AccountsAPI();
     const data = await accountsAPI.login(userId);
-    console.log(data.id);
-    console.log(data.role);
     return {
         userId: data.id,
         userRole: data.role,

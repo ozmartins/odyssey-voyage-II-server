@@ -44,12 +44,12 @@ const resolvers = {
         },
     },
     Host: {
-        __resolveReferece: (user, { dataSources }) => {
+        __resolveReference: (user, { dataSources }) => {
             return dataSources.accountsAPI.getUser(user.id);
         }
     },
     Guest: {
-        __resolveReferece: (user, { dataSources }) => {
+        __resolveReference: (user, { dataSources }) => {
             return dataSources.accountsAPI.getUser(user.id);
         }
     },
