@@ -11,6 +11,8 @@ const { AuthenticationError } = require('./utils/errors');
 const typeDefs = gql(readFileSync('./schema.graphql', { encoding: 'utf-8' }));
 const resolvers = require('./resolvers');
 
+const BookingDb = require('./datasources/bookings')
+
 async function startApolloServer() {
   const server = new ApolloServer({
     schema: buildSubgraphSchema({
@@ -19,8 +21,8 @@ async function startApolloServer() {
     }),
   });
 
-  const port = 0; // TODO: change port number
-  const subgraphName = ''; // TODO: change to subgraph name
+  const port = 4003;
+  const subgraphName = 'bookings';
 
   try {
     const { url } = await startStandaloneServer(server, {
@@ -40,7 +42,7 @@ async function startApolloServer() {
         return {
           ...userInfo,
           dataSources: {
-            // TODO: add data sources here
+            bookingDb: new BookingDb()
           },
         };
       },
