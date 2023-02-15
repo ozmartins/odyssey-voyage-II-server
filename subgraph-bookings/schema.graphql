@@ -1,7 +1,30 @@
-extend schema
-  @link(url: "https://specs.apollo.dev/federation/v2.0",
-        import: ["@key"])
+extend schema @link(url: "https://specs.apollo.dev/federation/v2.0", import: ["@key"])
         
 type Query {
-  example: String
+  bookings: [Booking]
+}
+
+type Booking @key(fields: "id") {
+  id: ID!
+  checkInDate: String!
+  checkOutDate: String!  
+  status: BookingStatus!
+}
+
+enum BookingStatus {
+  CURRENT
+  COMPLETED
+  UPCOMING
+}
+
+type Listing @key(fields: "id"){
+    id: ID!
+    bookings: [Booking]!
+    numberOfUpcomingBookings: Int!
+    currentlyBookedDates: [ReservedDate]!
+}
+
+type ReservedDate {
+  checkInDate: String!
+  checkOutDate: String!
 }
