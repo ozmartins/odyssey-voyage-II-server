@@ -23,6 +23,8 @@ const resolvers = {
 
             const listings = await dataSources.listingsAPI.getListings({ numOfBeds, page, limit, sortBy });
 
+            //TODO: Revisar esse função. Não sei como fazer uma querie que junte duas APIs.
+
             // check availability for each listing
             /*const listingAvailability = await Promise.all(
                 listings.map((listing) =>
@@ -36,6 +38,67 @@ const resolvers = {
             return availableListings;*/
 
             return listings;
+        },
+    },
+    Mutation: {
+        createListing: async (_, { listing }, { dataSources, userId, userRole }) => {
+            if (!userId) throw AuthenticationError();
+
+            const { title, description, photoThumbnail, numOfBeds, costPerNight, locationType, amenities } = listing;
+
+            if (userRole === 'Host') {
+                try {
+                    const newListing = await dataSources.listingsAPI.createListing({
+                        title,
+                        description,
+                        photoThumbnail,
+                        numOfBeds,
+                        costPerNight,
+                        hostId: userId,
+                        locationType,
+                        amenities,
+                    });
+
+                    return {
+                        code: 200,
+                        success: true,
+                        message: 'Listing successfully created!',
+                        listing: newListing,
+                    };
+                } catch (err) {
+                    return {
+                        code: 400,
+                        success: false,
+                        message: err.message,
+                    };
+                }
+            } else {
+                return {
+                    code: 400,
+                    success: false,
+                    message: 'Only hosts can create new listings',
+                };
+            }
+        },
+        updateListing: async (_, { listingId, listing }, { dataSources, userId }) => {
+            if (!userId) throw AuthenticationError();
+
+            try {
+                const updatedListing = await dataSources.listingsAPI.updateListing({ listingId, listing });
+
+                return {
+                    code: 200,
+                    success: true,
+                    message: 'Listing successfully updated!',
+                    listing: updatedListing,
+                };
+            } catch (err) {
+                return {
+                    code: 400,
+                    success: false,
+                    message: err.message,
+                };
+            }
         },
     },
     Listing: {

@@ -1,5 +1,6 @@
 extend schema @link(url: "https://specs.apollo.dev/federation/v2.0", import: ["@key"])
 
+#Queries
 type Query {
     featuredListings: [Listing]!
     searchListings(criteria: SearchListingsInput): [Listing]!
@@ -8,6 +9,13 @@ type Query {
     listingAmenities: [Amenity]!
 }
 
+#Mutations
+type Mutation {
+    createListing(listing: CreateListingInput!): CreateListingResponse!
+    updateListing(listingId: ID!, listing: UpdateListingInput!): UpdateListingResponse!
+}
+
+#Types
 type Listing @key(fields: "id"){
     id: ID!
     title: String!
@@ -21,6 +29,27 @@ type Listing @key(fields: "id"){
     totalCost(checkInDate: String!, checkOutDate: String!): Float!
 }
 
+type Amenity {
+    id: ID!
+    category: AmenityCategory
+    name: String!
+}
+
+type CreateListingResponse implements MutationResponse {  
+  code: Int!
+  success: Boolean!
+  message: String!  
+  listing: Listing
+}
+
+type UpdateListingResponse implements MutationResponse {
+  code: Int!
+  success: Boolean!
+  message: String!  
+  listing: Listing
+}
+
+#Entities
 type Booking @key(fields: "id") {
     id: ID!
 }
@@ -29,18 +58,55 @@ type Review @key(fields: "id") {
     id: ID!
 }
 
-type Amenity {
-    id: ID!
-    category: AmenityCategory
-    name: String!
+type Host implements User @key(fields: "id") {
+    id: ID!    
 }
 
+#Inputs
+input SearchListingsInput {
+    checkInDate: String!
+    checkOutDate: String!
+    numOfBeds: Int
+    page: Int
+    limit: Int
+    sortBy: SortByCriteria
+}
+
+input CreateListingInput {  
+  title: String!  
+  description: String!  
+  photoThumbnail: String!  
+  numOfBeds: Int!  
+  costPerNight: Float!  
+  locationType: LocationType!
+  amenities: [ID!]!
+}
+
+input UpdateListingInput {
+  title: String  
+  description: String  
+  photoThumbnail: String
+  numOfBeds: Int  
+  costPerNight: Float  
+  locationType: LocationType
+  amenities: [ID]
+}
+
+#Interfaces
 interface User {
     id: ID!
 }
 
-type Host implements User @key(fields: "id") {
-    id: ID!    
+interface MutationResponse {
+  code: Int!
+  success: Boolean!
+  message: String!
+}
+
+#Enums
+enum SortByCriteria {
+    COST_ASC
+    COST_DESC
 }
 
 enum LocationType {
@@ -55,18 +121,4 @@ enum AmenityCategory {
     ACCOMMODATION_DETAILS
     SPACE_SURVIVAL
     OUTDOORS
-}
-
-input SearchListingsInput {
-    checkInDate: String!
-    checkOutDate: String!
-    numOfBeds: Int
-    page: Int
-    limit: Int
-    sortBy: SortByCriteria
-}
-
-enum SortByCriteria {
-    COST_ASC
-    COST_DESC
 }
