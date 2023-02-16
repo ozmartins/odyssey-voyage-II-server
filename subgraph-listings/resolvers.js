@@ -102,6 +102,10 @@ const resolvers = {
         },
     },
     Listing: {
+        __resolveReference: (listing, { dataSources }) => {
+            console.log(listing);
+            return dataSources.listingsAPI.getListing(listing.id);
+        },
         host: ({ hostId }) => {
             return { id: hostId };
         },
