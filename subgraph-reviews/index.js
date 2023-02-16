@@ -10,6 +10,7 @@ const { AuthenticationError } = require('./utils/errors');
 
 const typeDefs = gql(readFileSync('./schema.graphql', { encoding: 'utf-8' }));
 const resolvers = require('./resolvers');
+const ReviewsDb = require('./datasources/reviews');
 
 async function startApolloServer() {
   const server = new ApolloServer({
@@ -19,8 +20,8 @@ async function startApolloServer() {
     }),
   });
 
-  const port = 0; // TODO: change port number
-  const subgraphName = ''; // TODO: change to subgraph name
+  const port = 4004;
+  const subgraphName = 'reviews';
 
   try {
     const { url } = await startStandaloneServer(server, {
@@ -40,7 +41,7 @@ async function startApolloServer() {
         return {
           ...userInfo,
           dataSources: {
-            // TODO: add data sources here
+            reviewsDb: new ReviewsDb()
           },
         };
       },
