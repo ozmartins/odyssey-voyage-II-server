@@ -14,8 +14,6 @@ type Listing @key(fields: "id"){
     locationType: LocationType
     host: Host!
     amenities: [Amenity]
-    reviews: [Review]!
-    overralRating: Float
     totalCost(checkInDate: String!, checkOutDate: String!): Float!
 }
 

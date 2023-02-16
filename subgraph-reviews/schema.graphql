@@ -5,3 +5,15 @@ extend schema
 type Query {
   example: String
 }
+
+type Listing @key(fields: "is"){
+  reviews: [Review]!
+  overralRating: Float
+}
+
+type Review @key(fields: "id"){
+  id: ID!
+  text: String!
+  author: User!
+  rating: Float!
+}
