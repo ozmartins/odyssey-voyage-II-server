@@ -22,8 +22,10 @@
     "@apollo/subgraph": "^2.1.3",
     "axios": "^1.1.3",
     "graphql": "^16.6.0",
+    "sequelize": "^6.9.0",
     "graphql-tag": "^2.12.6",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "sqlite3": "^5.1.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.13"

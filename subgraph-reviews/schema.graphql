@@ -2,18 +2,14 @@ extend schema
   @link(url: "https://specs.apollo.dev/federation/v2.0",
         import: ["@key"])
         
-type Query {
-  example: String
-}
-
-type Listing @key(fields: "is"){
+type Listing @key(fields: "id"){
+  id: ID!
   reviews: [Review]!
   overralRating: Float
 }
 
 type Review @key(fields: "id"){
   id: ID!
-  text: String!
-  author: User!
+  text: String!    
   rating: Float!
 }
