@@ -1,11 +1,20 @@
 const { GraphQLError } = require('graphql');
 
 const AuthenticationError = () => {
-    return new GraphQLError("You aren't logged in", {
+    const authErrMessage = '*** you must be logged in ***';
+    return new GraphQLError(authErrMessage, {
         extensions: {
-            code: "UNAUTHENTICADED"
-        }
-    })
-}
+            code: 'UNAUTHENTICATED',
+        },
+    });
+};
 
-module.exports = { AuthenticationError };
+const ForbiddenError = (errMessage) => {
+    return new GraphQLError(errMessage, {
+        extensions: {
+            code: 'FORBIDDEN',
+        },
+    });
+};
+
+module.exports = { AuthenticationError, ForbiddenError };

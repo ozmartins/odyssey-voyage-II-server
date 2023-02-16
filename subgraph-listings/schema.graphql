@@ -1,7 +1,11 @@
 extend schema @link(url: "https://specs.apollo.dev/federation/v2.0", import: ["@key"])
 
 type Query {
-    featuredListings: [Listing!]!    
+    featuredListings: [Listing]!
+    searchListings(criteria: SearchListingsInput): [Listing]!
+    hostListings: [Listing]!
+    listing(id: ID!): Listing
+    listingAmenities: [Amenity]!
 }
 
 type Listing @key(fields: "id"){
@@ -11,7 +15,7 @@ type Listing @key(fields: "id"){
     photoThumbnail: String!
     numOfBeds: Int!
     costPerNight: Float!
-    locationType: LocationType
+    locationType: LocationType!
     host: Host!
     amenities: [Amenity]
     totalCost(checkInDate: String!, checkOutDate: String!): Float!
@@ -48,7 +52,21 @@ enum LocationType {
 }
 
 enum AmenityCategory {
-    ACCOMODATION_DETAILS
+    ACCOMMODATION_DETAILS
     SPACE_SURVIVAL
     OUTDOORS
+}
+
+input SearchListingsInput {
+    checkInDate: String!
+    checkOutDate: String!
+    numOfBeds: Int
+    page: Int
+    limit: Int
+    sortBy: SortByCriteria
+}
+
+enum SortByCriteria {
+    COST_ASC
+    COST_DESC
 }
