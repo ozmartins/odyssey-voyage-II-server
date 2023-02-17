@@ -13,6 +13,17 @@ const resolvers = {
     overralRating: ({ id }, _, { dataSources }) => {
       return dataSources.reviewsDb.getOverallRatingForListing(id);
     }
+  },
+  Booking: {
+    guestReview: ({ id }, _, { dataSources }) => {
+      return dataSources.reviewsDb.getReviewForBooking('GUEST', id);
+    },
+    hostReview: ({ id }, _, { dataSources }) => {
+      return dataSources.reviewsDb.getReviewForBooking('HOST', id);
+    },
+    locationReview: ({ id }, _, { dataSources }) => {
+      return dataSources.reviewsDb.getReviewForBooking('LISTING', id);
+    }
   }
 };
 

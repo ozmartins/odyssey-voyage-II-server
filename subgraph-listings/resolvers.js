@@ -103,7 +103,6 @@ const resolvers = {
     },
     Listing: {
         __resolveReference: (listing, { dataSources }) => {
-            console.log(listing);
             return dataSources.listingsAPI.getListing(listing.id);
         },
         host: ({ hostId }) => {
@@ -112,6 +111,11 @@ const resolvers = {
         totalCost: async ({ id }, { checkInDate, checkOutDate }, { dataSources }) => {
             const { totalCost } = await dataSources.listingsAPI.getTotalCost({ id, checkInDate, checkOutDate });
             return totalCost || 0;
+        }
+    },
+    Booking: {
+        totalPrice: async ({ id }, arg2, { dataSources }) => {
+            return await dataSources.listingsAPI.getTotalCost(id);
         }
     },
     AmenityCategory: {

@@ -13,3 +13,10 @@ type Review @key(fields: "id"){
   text: String!    
   rating: Float!
 }
+
+type Booking @key(fields: "id") {
+  id: ID!
+  locationReview: Review  
+  hostReview: Review  
+  guestReview: Review
+}

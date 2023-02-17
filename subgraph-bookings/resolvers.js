@@ -12,7 +12,22 @@ const resolvers = {
       //if (!listings.find((listing) => listing.id === listingId)) throw new Error('Listing does not belong to host');
 
       return await dataSources.bookingDb.getBookingsForListing(listingId, status);
-    }
+    },
+    guestBookings: async (_, __, { dataSources, userId, userRole }) => {
+      if (!userId) throw AuthenticationError();
+      if (userRole != 'Guest') throw ForbiddenError('Only guests have access to trips');
+      return await dataSources.bookingDb.getBookingsForUser(userId);
+    },
+    upcomingGuestBookings: async (_, __, { dataSources, userId, userRole }) => {
+      if (!userId) throw AuthenticationError();
+      if (userRole !== 'Guest') throw ForbiddenError('Only guests have access to trips');
+      return await dataSources.bookingDb.getBookingsForUser(userId, 'UPCOMING');
+    },
+    pastGuestBookings: async (_, __, { dataSources, userId, userRole }) => {
+      if (!userId) throw AuthenticationError();
+      if (userRole != 'Guest') throw ForbiddenError('Only guests have access to trips');
+      return await dataSources.bookingDb.getBookingsForUser(userId, 'COMPLETED');
+    },
   },
   Booking: {
     __resolveReference: (bookingId, { dataSources }) => {
@@ -26,6 +41,9 @@ const resolvers = {
     },
     listing: (booking) => {
       return { id: booking.listingId };
+    },
+    guest: (booking) => {
+      return { id: booking.guestId };
     }
   },
   Listing: {
