@@ -9,10 +9,10 @@ type Query {
   #currentGuestBooking: Booking
 }
 
-type Mutation {
+#type Mutation {
   #TODO: o resolver desta mutation exige a comunicação entre várias APIS e eu ainda não sei fazer isso do jeito certo.
   #createBooking(createBookingInput: CreateBookingInput): CreateBookingResponse!
-}
+#}
 
 type Booking @key(fields: "id") {
   id: ID!

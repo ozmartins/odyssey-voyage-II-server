@@ -12,6 +12,19 @@ type Review @key(fields: "id"){
   id: ID!
   text: String!    
   rating: Float!
+  author: User
+}
+
+interface User {
+  id: ID!
+}
+
+type Guest implements User @key(fields: "id"){
+  id: ID!
+}
+
+type Host implements User @key(fields: "id"){
+  id: ID!
 }
 
 type Booking @key(fields: "id") {

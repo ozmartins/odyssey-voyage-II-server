@@ -46,11 +46,17 @@ const resolvers = {
     Host: {
         __resolveReference: (user, { dataSources }) => {
             return dataSources.accountsAPI.getUser(user.id);
+        },
+        overallRating: () => {
+            return 0
         }
     },
     Guest: {
         __resolveReference: (user, { dataSources }) => {
             return dataSources.accountsAPI.getUser(user.id);
+        },
+        funds: () => {
+            return 0
         }
     },
 };

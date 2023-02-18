@@ -33,10 +33,12 @@ type Host implements User @key(fields: "id") {
     name: String!,
     profilePicture: String!,
     profileDescription: String!
+    overallRating: Float!
 }
 
 type Guest implements User @key(fields: "id") {
     id: ID!,
     name: String!,
     profilePicture: String!
+    funds: Float
 }

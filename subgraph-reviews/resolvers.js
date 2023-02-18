@@ -14,6 +14,17 @@ const resolvers = {
       return dataSources.reviewsDb.getOverallRatingForListing(id);
     }
   },
+  Review: {
+    author: (review) => {
+      let role = '';
+      if (review.targetType === 'LISTING' || review.targetType === 'HOST') {
+        role = 'Guest';
+      } else {
+        role = 'Host';
+      }
+      return { __typename: role, id: review.authorId };
+    }
+  },
   Booking: {
     guestReview: ({ id }, _, { dataSources }) => {
       return dataSources.reviewsDb.getReviewForBooking('GUEST', id);
