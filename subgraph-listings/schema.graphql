@@ -1,4 +1,4 @@
-extend schema @link(url: "https://specs.apollo.dev/federation/v2.0", import: ["@key"])
+extend schema @link(url: "https://specs.apollo.dev/federation/v2.0", import: ["@key", "@shareable"])
 
 #Queries
 type Query {
@@ -28,6 +28,7 @@ type Listing @key(fields: "id"){
     amenities: [Amenity]
     totalCost(checkInDate: String!, checkOutDate: String!): Float!
     overallRating: Int
+    coordinates: GalacticCoordinates
 }
 
 type Amenity {
@@ -63,6 +64,11 @@ type Review @key(fields: "id") {
 
 type Host implements User @key(fields: "id") {
     id: ID!    
+}
+
+type GalacticCoordinates @shareable {
+  latitude: Float!
+  longitude: Float!
 }
 
 #Inputs

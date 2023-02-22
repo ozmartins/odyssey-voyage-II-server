@@ -37,6 +37,10 @@ class ListingsAPI extends RESTDataSource {
     updateListing({ listingId, listing }) {
         return this.patch(`listings/${listingId}`, { body: { listing } });
     }
+
+    getListingCoordinates(id) {
+        return this.get(`listing/${id}/coordinates`)
+    }
 }
 
 module.exports = ListingsAPI;

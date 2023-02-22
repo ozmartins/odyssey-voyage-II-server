@@ -111,6 +111,9 @@ const resolvers = {
         totalCost: async ({ id }, { checkInDate, checkOutDate }, { dataSources }) => {
             const { totalCost } = await dataSources.listingsAPI.getTotalCost({ id, checkInDate, checkOutDate });
             return totalCost || 0;
+        },
+        coordinates: (listing, { dataSources }) => {
+            return dataSources.listingsAPI.getListingCoordinates(listing.id);
         }
     },
     Booking: {
