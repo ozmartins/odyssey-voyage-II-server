@@ -42,3 +42,8 @@ type Guest implements User @key(fields: "id") {
     profilePicture: String!
     funds: Float
 }
+
+type GalacticCoordinates {
+  latitude: Float!
+  longitude: Float!
+}
