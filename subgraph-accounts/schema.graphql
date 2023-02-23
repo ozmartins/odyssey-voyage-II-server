@@ -1,4 +1,4 @@
-extend schema @link(url: "https://specs.apollo.dev/federation/v2.0", import: ["@key"])
+extend schema @link(url: "https://specs.apollo.dev/federation/v2.0", import: ["@key", "@shareable"])
 
 type Query {
     user(id: ID!): User
@@ -43,7 +43,7 @@ type Guest implements User @key(fields: "id") {
     funds: Float
 }
 
-type GalacticCoordinates {
+type GalacticCoordinates @shareable {
   latitude: Float!
   longitude: Float!
 }
